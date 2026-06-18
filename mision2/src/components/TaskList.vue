@@ -11,13 +11,9 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import TaskItem from './TaskItem.vue'
+import type { Task } from '../interfaces/types';
 
 // Task interface to define the structure of a task object.
-interface Task {
-  id: number;
-  title: string;
-  completed: boolean;
-}
 
 const tasks = ref<Task[]>([]);
 

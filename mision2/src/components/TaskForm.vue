@@ -8,13 +8,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-
-// Task interface to define the structure of a task object.
-interface Task {
-  id: number;
-  title: string;
-  completed: boolean;
-}
+import type { Task } from '../interfaces/types';
 
 // Reference to the input element and a reactive array to hold the tasks.
 const taskInput = ref<string>('');

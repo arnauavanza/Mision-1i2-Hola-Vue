@@ -16,13 +16,7 @@
 </template>
 
 <script setup lang="ts">
-
-// Task interface to define the structure of a task object.
-interface Task {
-  id: number;
-  title: string;
-  completed: boolean;
-}
+import type { Task } from '../interfaces/types';
 
 // ComponentProps interface to define the props expected by the component.
 interface ComponentProps {
