@@ -3,14 +3,14 @@
 <!-- Conditional to render the task title with a strikethrough if it is completed, otherwise render it normally. -->
     <div v-if="!props.task.completed">{{ props.task.title }}</div>
     <div v-else class="completed-task">{{ props.task.title }}</div>
-    <form>
+    
 <!-- Button calling the deleteTask function. -->
-      <button class="delete-button" type="submit" @click="deleteTask(props.task.id)">Eliminar</button>
-    </form>
-    <form>
+      <button class="delete-button"  @click="deleteTask(props.task.id)">Eliminar</button>
+    
+    
 <!-- Button calling the completeTask function. -->
-      <button class="complete-button" type="submit" @click="completeTask(props.task.id)">Completar</button>
-    </form>
+      <button class="complete-button"  @click="completeTask(props.task.id)">Completar</button>
+    
 
   </div>
 </template>
