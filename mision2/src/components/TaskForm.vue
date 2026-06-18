@@ -10,27 +10,23 @@
 import { ref } from 'vue';
 import type { Task } from '../interfaces/types';
 
+
 // Reference to the input element and a reactive array to hold the tasks.
 const taskInput = ref<string>('');
 const tasks = ref<Task[]>(JSON.parse(localStorage.getItem('tasks') || '[]'));
 
 // Function to save a new task to the tasks array and localStorage.
 function saveTask() {
-  if (taskInput.value) {
-    const newTask: Task = {
-      id: Date.now(),
-      title: taskInput.value.trim(),
-      completed: false,
-    };
-    if (newTask.title) {
-      tasks.value.push(newTask);
-      taskInput.value = '';
-      localStorage.setItem('tasks', JSON.stringify(tasks.value));
-
-    } else {
-      alert('Por favor, ingresa un título para la tarea.');
-    }
-  }
+  const text = taskInput.value.trim();
+  if (!text) return
+  const newTask: Task = {
+    id: Date.now(),
+    title: taskInput.value.trim(),
+    completed: false,
+  };
+  tasks.value.push(newTask);
+  taskInput.value = '';
+  localStorage.setItem('tasks', JSON.stringify(tasks.value));
 }
 </script>
 
