@@ -1,4 +1,4 @@
-#  Misión 1: Hola Vue
+#  Misión 1 i 2: Hola Vue
 
 Este proyecto es una aplicación web moderna desarrollada con **Vue 3**, **Vite** y **TypeScript**. A continuación se detallan los pasos necesarios para configurar el entorno de desarrollo local tanto en **Windows** como en **Linux**.
 
