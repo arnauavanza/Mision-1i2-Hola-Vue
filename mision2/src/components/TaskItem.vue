@@ -1,17 +1,11 @@
 <template>
   <div class="task-item">
 <!-- Conditional to render the task title with a strikethrough if it is completed, otherwise render it normally. -->
-    <div v-if="!props.task.completed">{{ props.task.title }}</div>
-    <div v-else class="completed-task">{{ props.task.title }}</div>
-    
-<!-- Button calling the deleteTask function. -->
-      <button class="delete-button"  @click="deleteTask(props.task.id)">Eliminar</button>
-    
-    
-<!-- Button calling the completeTask function. -->
-      <button class="complete-button"  @click="completeTask(props.task.id)">Completar</button>
-    
-
+    <div :class="{ 'completed-task': props.task.completed }">{{ props.task.title }}</div>
+<form @submit.prevent="handleSubmit">
+  <button type="submit" class="delete-button" value="delete" name="action">Eliminar</button>
+  <button type="submit" class="complete-button" value="complete" name="action">Completar</button>
+</form> 
   </div>
 </template>
 
@@ -24,29 +18,25 @@ interface ComponentProps {
 }
 
 const props = defineProps<ComponentProps>();
+  
+const emit = defineEmits<{
+  delete: [id: number]
+  complete: [id: number]
+}>();
 
-// Function to delete a task from localStorage based on its ID.
-function deleteTask(taskId: number) {
-  const tasks: Task[] = JSON.parse(localStorage.getItem('tasks') || '[]');
-  const index = tasks.findIndex(task => task.id === taskId);
-  if (index !== -1) {
-    tasks.splice(index, 1); 
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+const handleSubmit = (event: SubmitEvent) => {
+  const submitter = event.submitter as HTMLButtonElement
+
+  switch (submitter.value) {
+    case 'delete':
+      emit('delete', props.task.id)
+      break
+
+    case 'complete':
+      emit('complete', props.task.id)
+      break
   }
 }
-
-// Function to mark a task as completed in localStorage based on its ID.
-function completeTask(taskId: number) {
-  const tasks: Task[] = JSON.parse(localStorage.getItem('tasks') || '[]');
-  for (const task of tasks) {
-    if (task.id === taskId) {
-      task.completed = true;
-      break;
-    }
-  }
-  localStorage.setItem('tasks', JSON.stringify(tasks));
-}
-
 </script>
 
 <style scoped>
@@ -67,6 +57,7 @@ function completeTask(taskId: number) {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  margin-right: 5px;
 }
 
 .delete-button:hover {

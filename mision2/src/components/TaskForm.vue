@@ -10,23 +10,30 @@
 import { ref } from 'vue';
 import type { Task } from '../interfaces/types';
 
+const emit = defineEmits<{
+  add: [task: Task]
+}>()
 
 // Reference to the input element and a reactive array to hold the tasks.
 const taskInput = ref<string>('');
-const tasks = ref<Task[]>(JSON.parse(localStorage.getItem('tasks') || '[]'));
 
-// Function to save a new task to the tasks array and localStorage.
-function saveTask() {
-  const text = taskInput.value.trim();
+// Function to handle the form submission, creating a new task and emitting it to the parent component.
+function saveTask(event: Event) {
+  event.preventDefault()
+
+  const text = taskInput.value.trim()
+
   if (!text) return
+
   const newTask: Task = {
     id: Date.now(),
-    title: taskInput.value.trim(),
-    completed: false,
-  };
-  tasks.value.push(newTask);
-  taskInput.value = '';
-  localStorage.setItem('tasks', JSON.stringify(tasks.value));
+    title: text,
+    completed: false
+  }
+
+  emit('add', newTask)
+
+  taskInput.value = ''
 }
 </script>
 
